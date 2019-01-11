@@ -37,9 +37,9 @@ public class BookSearchController {
     private boolean areParameterValuesValid(SearchParameterDto parameter) {
         boolean result = false;
             if (hasDatePeriodSearchParameter(parameter)) {
-                result = parameter.getStartYear() <= parameter.getEndYear();
+                result = parameter.getDatePeriodStartYear() <= parameter.getDatePeriodEndYear();
             } else {
-                if (parameter.getStartYear() == null && parameter.getEndYear() == null) {
+                if (parameter.getDatePeriodStartYear() == null && parameter.getDatePeriodEndYear() == null) {
                     result = parameter.hasAnySearchParameter();
                 }
             }
@@ -47,7 +47,7 @@ public class BookSearchController {
     }
 
     private boolean hasDatePeriodSearchParameter(SearchParameterDto parameter) {
-        return parameter.getStartYear() != null && parameter.getEndYear() != null;
+        return parameter.getDatePeriodStartYear() != null && parameter.getDatePeriodEndYear() != null;
     }
 
     private void printValue(CSVPrinter printer, BookSearchDto bookInfo) {

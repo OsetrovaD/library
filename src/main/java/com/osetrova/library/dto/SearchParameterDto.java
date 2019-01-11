@@ -8,7 +8,10 @@ import lombok.NoArgsConstructor;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,8 +21,8 @@ public class SearchParameterDto {
 
     private String authorName;
     private String genreName;
-    private Integer startYear;
-    private Integer endYear;
+    private Integer datePeriodStartYear;
+    private Integer datePeriodEndYear;
 
     public boolean hasAnySearchParameter() {
         return Arrays.stream(getClass().getDeclaredFields()).anyMatch(this::isValid);
@@ -27,16 +30,23 @@ public class SearchParameterDto {
 
     public List<String> getValidFieldValues() {
         List<String> fieldValues = new ArrayList<>();
-        Arrays.stream(getClass().getDeclaredFields()).filter(this::isValid).forEach(x -> addValueToList(fieldValues, x));
+        getValidFields().forEach(x -> addValueToList(fieldValues, x));
 
         return fieldValues;
     }
 
     public List<String> getValidFieldNames() {
         List<String> fieldValues = new ArrayList<>();
-        Arrays.stream(getClass().getDeclaredFields()).filter(this::isValid).forEach(x -> fieldValues.add(x.getName()));
+        getValidFields().forEach(x -> fieldValues.add(x.getName()));
 
         return fieldValues;
+    }
+
+    private List<Field> getValidFields() {
+        return Arrays.stream(getClass().getDeclaredFields())
+                .filter(this::isValid)
+                .sorted(Comparator.comparing(Field::getName).reversed())
+                .collect(Collectors.toList());
     }
 
     private boolean isValid(Field field) {
