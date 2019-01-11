@@ -36,13 +36,13 @@ public class BookSearchController {
 
     private boolean areParameterValuesValid(SearchParameterDto parameter) {
         boolean result = false;
-            if (hasDatePeriodSearchParameter(parameter)) {
-                result = parameter.getDatePeriodStartYear() <= parameter.getDatePeriodEndYear();
-            } else {
-                if (parameter.getDatePeriodStartYear() == null && parameter.getDatePeriodEndYear() == null) {
-                    result = parameter.hasAnySearchParameter();
-                }
+        if (hasDatePeriodSearchParameter(parameter)) {
+            result = parameter.getDatePeriodStartYear() <= parameter.getDatePeriodEndYear();
+        } else {
+            if (parameter.getDatePeriodStartYear() == null && parameter.getDatePeriodEndYear() == null) {
+                result = parameter.hasAnySearchParameter();
             }
+        }
         return result;
     }
 

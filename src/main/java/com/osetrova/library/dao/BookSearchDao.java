@@ -19,9 +19,9 @@ public class BookSearchDao {
 
     private static final String QUERY =
             "SELECT b.name, b.creation_year, g.name AS genre, a.name AS author FROM library_app_storage.book b" +
-            " JOIN library_app_storage.genre g ON g.id = b.genre_id" +
-            " JOIN library_app_storage.author a ON a.id = b.author_id" +
-            " WHERE";
+                    " JOIN library_app_storage.genre g ON g.id = b.genre_id" +
+                    " JOIN library_app_storage.author a ON a.id = b.author_id" +
+                    " WHERE";
     private static final Map<String, String> QUERY_PARAMETER = new HashMap<>();
     private static final String AND = " AND";
     private JdbcTemplate template;
